@@ -7,7 +7,7 @@
  * Strategy Description:
  * My AI uses the strategy of looking into the future of every important move and based on a few factors giving each one a score.
  * Whichever score it deems best is the one it chooses and I only looked forward 1 move because thats all I could do myself as 
- * looking further into the future was harder and I could not figure out a way to solve that problem without just trying to search 
+ * looking further into the future was taking too long and I could not figure out a way to solve that problem without just trying to search 
  * up ways on the internet.
  */
 import java.util.ArrayList;
