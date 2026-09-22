@@ -1,12 +1,13 @@
 /**
  * STUDENT FILE
  *
- * Name: ______________________________
- * AI Code Name: ______________________
+ * Name: Kuba
+ * AI Code Name: Bribed
  *
  * Strategy Description:
- * Replace this comment with a short explanation of the strategy your AI uses.
- * Your final strategy must be fundamentally different from the sample AIs.
+ * My AI uses the strategy of looking into the future of every important move and based on a few factors giving each one a score.
+ * Whichever score it deems best is the one it chooses and I only looked forward 1 move because thats all I could do myself but I
+ * would have tried more if I could use alpha-beta pruning which I learned about after some research.
  */
 import java.util.ArrayList;
 public class Bribed extends CellAI {
@@ -31,25 +32,22 @@ public class Bribed extends CellAI {
          *   randomInt(bound)            -> reproducible random integer
          */
 
+    
         int myID = getID();
         int oppID = findOpp(grid);
         ArrayList<Location> candidate = findGoodSearch(grid);
         int bestScore = Integer.MIN_VALUE;
         Location bestMove = candidate.get(0);
 
-        for(Location a : candidate){ {
-
+        for(Location a : candidate) {
             Grid next = application(grid, a.getRow(), a.getCol());
-            int score = bestMove(next, myID, oppID,1);
-            
+            int score = evaluateFuture(next, myID);
+
             if(score > bestScore) {
                 bestScore = score;
                 bestMove = a;
             }
-        } 
-
         }
-        System.out.println("I chose (" + bestMove.getRow() + ", " + bestMove.getCol() + ") with a score of " + bestScore);   
 
         return bestMove;
     }
@@ -67,22 +65,6 @@ public class Bribed extends CellAI {
             }
         }
         return -1;
-    }
-
-    private int findOppScore(Grid grid, int myID, int oppID){
-            int worst = Integer.MAX_VALUE;
-
-            for(int r = 0; r < grid.getRows(); r++){
-                for(int c = 0; c < grid.getCols(); c++){    
-                    Grid afterOpp = applicationForOpp(grid, r, c, oppID);
-
-                    int score = evaluateFuture(afterOpp, myID);
-                    if(score < worst){
-                        worst = score;
-                    }
-                }
-            }
-            return worst;
     }
 
     private Grid applicationForOpp(Grid grid, int r, int c, int oppID){
@@ -138,39 +120,6 @@ public class Bribed extends CellAI {
         int survival = (myS - oppS) * 5;
         int potential = (myP - oppP) * 3;
         return cellScore + survival + potential;
-    }
-
-    private int bestMove(Grid grid, int myID, int oppID, int depth){
-        if(depth == 0){
-            return evaluateFuture(grid, myID);
-        }
-
-        if(depth % 2 == 0){
-            int num = Integer.MAX_VALUE;
-
-            ArrayList<Location> move = findGoodSearch(grid);
-            for(Location m : move){
-                Grid next = applicationForOpp(grid, m.getRow(), m.getCol(), oppID);
-                int score = bestMove(next, myID, oppID, depth - 1);
-                if(score < num){
-                    num = score;
-                }
-            }
-            return num;
-        } else {
-            int num = Integer.MIN_VALUE;
-
-            ArrayList<Location> move = findGoodSearch(grid);
-            for(Location m : move){
-                Grid next = applicationForOpp(grid, m.getRow(), m.getCol(), oppID);
-                int score = bestMove(next, myID, oppID, depth - 1);
-                if(score < num){
-                    num = score;
-                }
-            }
-            return num;
-        }
-        
     }
 
     private ArrayList<Location> findGoodSearch(Grid grid){
