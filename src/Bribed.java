@@ -35,7 +35,6 @@ public class Bribed extends CellAI {
 
     
         int myID = getID();
-        int oppID = findOpp(grid);
         ArrayList<Location> first = findGoodSearch(grid);
         int bestScore = Integer.MIN_VALUE;
         Location bestMove = first.get(0);
