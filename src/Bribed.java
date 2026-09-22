@@ -6,8 +6,9 @@
  *
  * Strategy Description:
  * My AI uses the strategy of looking into the future of every important move and based on a few factors giving each one a score.
- * Whichever score it deems best is the one it chooses and I only looked forward 1 move because thats all I could do myself but I
- * would have tried more if I could use alpha-beta pruning which I learned about after some research.
+ * Whichever score it deems best is the one it chooses and I only looked forward 1 move because thats all I could do myself as 
+ * looking further into the future was harder and I could not figure out a way to solve that problem without just trying to search 
+ * up ways on the internet.
  */
 import java.util.ArrayList;
 public class Bribed extends CellAI {
@@ -35,11 +36,11 @@ public class Bribed extends CellAI {
     
         int myID = getID();
         int oppID = findOpp(grid);
-        ArrayList<Location> candidate = findGoodSearch(grid);
+        ArrayList<Location> first = findGoodSearch(grid);
         int bestScore = Integer.MIN_VALUE;
-        Location bestMove = candidate.get(0);
+        Location bestMove = first.get(0);
 
-        for(Location a : candidate) {
+        for(Location a : first) {
             Grid next = application(grid, a.getRow(), a.getCol());
             int score = evaluateFuture(next, myID);
 
